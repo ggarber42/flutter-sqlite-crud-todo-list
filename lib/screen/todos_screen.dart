@@ -18,14 +18,13 @@ class _TodosScreenState extends State<TodosScreen> {
   @override
   void initState() {
     super.initState();
-
     fetchTodos();
   }
 
   void _submitData() async{
     Navigator.of(context).pop();
     final newTodo = TodoItem(name: _NameController.text);
-    await DatabaseHelper.instance.createTodoItem(newTodo);
+    await DatabaseHelper.instance.addTodoItem(newTodo);
 
   }
 
@@ -54,7 +53,8 @@ class _TodosScreenState extends State<TodosScreen> {
 
   void fetchTodos() async {
     setState(() => isLoading = true);
-    DatabaseHelper.instance.printTodos();
+    var todos = await DatabaseHelper.instance.getTodos();
+    todos.forEach((todo) => print(todo.toString()));
   }
 
   @override

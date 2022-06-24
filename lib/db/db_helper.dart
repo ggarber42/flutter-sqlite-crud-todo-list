@@ -41,7 +41,7 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<TodoItem> createTodoItem(TodoItem todo) async{
+  Future<TodoItem> addTodoItem(TodoItem todo) async{
     final db = await instance.database;
     await db.insert('TodoItem', todo.toJson());
     final result = await db.query('TodoItem');
@@ -50,10 +50,13 @@ class DatabaseHelper {
     return todo;
   }
 
-  void printTodos() async {
+  Future<List<TodoItem>> getTodos() async{
     final db = await instance.database;
-    final result = await db.query('TodoItem');
-    result.forEach((todo) => print(todo));
+    List<TodoItem> todos = [];
+    List<Map> queryResult = await db.query('TodoItem', columns: ['_id', 'name', 'done']);
+    for (int i = 0; i < queryResult.length; i++) {
+        todos.add(TodoItem.fromJson(queryResult[i]));
+    }
+    return todos;
   }
-
 }

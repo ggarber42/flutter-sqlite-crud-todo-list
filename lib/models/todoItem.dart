@@ -1,12 +1,18 @@
 class TodoItem {
-  final int? id;
-  final String name;
-  final bool done = false;
+  int? id;
+  String? name;
+  bool done = false;
 
-  const TodoItem({
+  TodoItem({
     this.id,
     required this.name,
   });
+
+  TodoItem.fromJson(Map json){ /* Alternative: named constructor */
+    id = json['id'];
+    name = json['name'];
+    done = json['done'] == 0 ? false : true;
+  }
 
   Map<String, Object?> toJson() {
     return {
@@ -16,4 +22,7 @@ class TodoItem {
     };
   }
 
+  String toString(){
+    return 'Todo name: $name done: $done';
+  }
 }
