@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqlite_crud/widgets/todo_tile.dart';
 
 import '../db/db_helper.dart';
 import '../models/todoItem.dart';
@@ -21,11 +22,10 @@ class _TodosScreenState extends State<TodosScreen> {
     fetchTodos();
   }
 
-  void _submitData() async{
+  void _submitData() async {
     Navigator.of(context).pop();
     final newTodo = TodoItem(name: _NameController.text);
     await DatabaseHelper.instance.addTodoItem(newTodo);
-
   }
 
   Future<void> _openAddModal(BuildContext ctx) async {
@@ -51,10 +51,11 @@ class _TodosScreenState extends State<TodosScreen> {
         });
   }
 
-  void fetchTodos() async {
+  Future<List<TodoItem>> fetchTodos() async {
     setState(() => isLoading = true);
     var todos = await DatabaseHelper.instance.getTodos();
     todos.forEach((todo) => print(todo.toString()));
+    return todos;
   }
 
   @override
@@ -66,13 +67,21 @@ class _TodosScreenState extends State<TodosScreen> {
       body: Container(
         width: double.infinity,
         margin: EdgeInsets.all(10),
-        child: Column(children: [
-          Text(
-            'Todos',
-            style: TextStyle(fontSize: 28),
-            textAlign: TextAlign.center,
-          ),
-        ]),
+        child: FutureBuilder(
+          future: fetchTodos(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<TodoItem> todos = snapshot.data as List<TodoItem>;
+              return ListView.builder(
+                itemCount: todos.length,
+                itemBuilder: (ctx, index) => TodoTile(todos[index]),
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

@@ -1,12 +1,12 @@
 class TodoItem {
   int? id;
   String? name;
-  bool done = false;
+  bool? done;
 
   TodoItem({
     this.id,
     required this.name,
-  });
+  }): done = false;
 
   TodoItem.fromJson(Map json){ /* Alternative: named constructor */
     id = json['id'];
