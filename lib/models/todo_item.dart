@@ -11,6 +11,8 @@ class TodoItem {
     )
   ''';
 
+  static final table = 'TodoItem';
+
   TodoItem({
     this.id,
     required this.name,

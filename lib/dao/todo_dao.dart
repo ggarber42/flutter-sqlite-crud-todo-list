@@ -25,7 +25,7 @@ class TodoDAO implements DAO<TodoItem> {
     final db = await DataBaseConnector.instance.database;
     List<TodoItem> todos = [];
     List<Map> queryResult =
-        await db.query('TodoItem', columns: ['_id', 'name', 'done']);
+        await db.query(TodoItem.table, columns: ['_id', 'name', 'done']);
     for (int i = 0; i < queryResult.length; i++) {
       todos.add(TodoItem.fromJson(queryResult[i]));
     }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sqlite_crud/dao/todo_dao.dart';
-import 'package:sqlite_crud/widgets/todo_tile.dart';
+import 'package:sqlite_crud/widgets/add_dialog.dart';
 
-import '../services/db_connector.dart';
+import '../dao/todo_dao.dart';
+import '../widgets/todo_tile.dart';
 import '../models/todo_item.dart';
 
 class TodosScreen extends StatefulWidget {
@@ -15,22 +15,12 @@ class TodosScreen extends StatefulWidget {
 class _TodosScreenState extends State<TodosScreen> {
   TodoDAO todoDao = new TodoDAO();
   late List<TodoItem> todos;
-  final _nameController = TextEditingController();
   var isLoading = false;
 
   @override
   void initState() {
     super.initState();
     fetchTodos();
-  }
-
-  void _submitData() {
-    Navigator.of(context).pop();
-    final newTodo = TodoItem(name: _nameController.text);
-    todoDao.create(newTodo);
-    setState(() {
-      fetchTodos();
-    });
   }
 
   Future<List<TodoItem>> fetchTodos() async {
@@ -43,23 +33,9 @@ class _TodosScreenState extends State<TodosScreen> {
   Future<void> _openAddModal(BuildContext ctx) async {
     return showDialog<void>(
         context: context,
-        barrierDismissible: false, // user must tap button!
+        barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('New Todo'),
-            content: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(5),
-                child: Column(children: [
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Name'),
-                    controller: _nameController,
-                    onSubmitted: (_) => _submitData(),
-                  ),
-                ]),
-              ),
-            ),
-          );
+          return AddDialog(fetchTodos);
         });
   }
 
