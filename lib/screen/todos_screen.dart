@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sqlite_crud/dao/todo_dao.dart';
 import 'package:sqlite_crud/widgets/todo_tile.dart';
 
-import '../db/db_helper.dart';
-import '../models/todoItem.dart';
+import '../services/db_connector.dart';
+import '../models/todo_item.dart';
 
 class TodosScreen extends StatefulWidget {
   final String title;
@@ -12,8 +13,9 @@ class TodosScreen extends StatefulWidget {
 }
 
 class _TodosScreenState extends State<TodosScreen> {
+  TodoDAO todoDao = new TodoDAO();
   late List<TodoItem> todos;
-  final _NameController = TextEditingController();
+  final _nameController = TextEditingController();
   var isLoading = false;
 
   @override
@@ -22,10 +24,20 @@ class _TodosScreenState extends State<TodosScreen> {
     fetchTodos();
   }
 
-  void _submitData() async {
+  void _submitData() {
     Navigator.of(context).pop();
-    final newTodo = TodoItem(name: _NameController.text);
-    await DatabaseHelper.instance.addTodoItem(newTodo);
+    final newTodo = TodoItem(name: _nameController.text);
+    todoDao.create(newTodo);
+    setState(() {
+      fetchTodos();
+    });
+  }
+
+  Future<List<TodoItem>> fetchTodos() async {
+    setState(() => isLoading = true);
+    var todos = await todoDao.readAll();
+    todos.forEach((todo) => print(todo.toString()));
+    return todos;
   }
 
   Future<void> _openAddModal(BuildContext ctx) async {
@@ -34,14 +46,14 @@ class _TodosScreenState extends State<TodosScreen> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('AlertDialog Title'),
+            title: const Text('New Todo'),
             content: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.all(5),
                 child: Column(children: [
                   TextField(
-                    decoration: InputDecoration(labelText: 'Title'),
-                    controller: _NameController,
+                    decoration: InputDecoration(labelText: 'Name'),
+                    controller: _nameController,
                     onSubmitted: (_) => _submitData(),
                   ),
                 ]),
@@ -49,13 +61,6 @@ class _TodosScreenState extends State<TodosScreen> {
             ),
           );
         });
-  }
-
-  Future<List<TodoItem>> fetchTodos() async {
-    setState(() => isLoading = true);
-    var todos = await DatabaseHelper.instance.getTodos();
-    todos.forEach((todo) => print(todo.toString()));
-    return todos;
   }
 
   @override

@@ -3,12 +3,21 @@ class TodoItem {
   String? name;
   bool? done;
 
+  static final createTableQuery = '''
+    CREATE TABLE IF NOT EXISTS TodoItem ( 
+      _id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      done BOOLEAN NOT NULL
+    )
+  ''';
+
   TodoItem({
     this.id,
     required this.name,
-  }): done = false;
+  }) : done = false;
 
-  TodoItem.fromJson(Map json){ /* Alternative: named constructor */
+  TodoItem.fromJson(Map json) {
+    /* Alternative: named constructor */
     id = json['id'];
     name = json['name'];
     done = json['done'] == 0 ? false : true;
@@ -22,7 +31,7 @@ class TodoItem {
     };
   }
 
-  String toString(){
+  String toString() {
     return 'Todo name: $name done: $done';
   }
 }
