@@ -1,11 +1,11 @@
 class TodoItem {
   int? id;
-  String? name;
-  bool? done;
+  late String name;
+  late int done;
 
   static final createTableQuery = '''
     CREATE TABLE IF NOT EXISTS TodoItem ( 
-      _id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       done BOOLEAN NOT NULL
     )
@@ -16,24 +16,53 @@ class TodoItem {
   TodoItem({
     this.id,
     required this.name,
-  }) : done = false;
+  }) : done = 0;
+
+  TodoItem.fromDB({
+    this.id,
+    required this.name,
+    required this.done
+  });
 
   TodoItem.fromJson(Map json) {
     /* Alternative: named constructor */
     id = json['id'];
     name = json['name'];
-    done = json['done'] == 0 ? false : true;
+    done = json['done'];
+  }
+
+    TodoItem copy({
+    int? id,
+    String? name,
+    int? done,
+  }) =>
+      TodoItem.fromDB(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        done: done ?? this.done,
+      );
+
+
+    int get getId => id!;
+
+    String get getName => name;
+
+    int get getDone => done;
+
+   set setDone(int value){
+    done = value;
   }
 
   Map<String, Object?> toJson() {
     return {
-      '_id': id,
+      'id': id,
       'name': name,
       'done': done,
     };
   }
 
   String toString() {
-    return 'Todo name: $name done: $done';
+    return '_id $id Todo name: $name done: $done';
   }
+
 }
