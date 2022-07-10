@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:sqlite_crud/dao/todo_dao.dart';
 import 'package:sqlite_crud/models/todo_item.dart';
 
@@ -15,7 +16,6 @@ class _AddDialogState extends State<AddDialog> {
   final _nameController = TextEditingController();
 
   void _submitData() {
-    print('kkkk');
     Navigator.of(context).pop();
     final newTodo = TodoItem(name: _nameController.text);
     final todoDao = new TodoDAO();
