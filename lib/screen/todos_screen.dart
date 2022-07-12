@@ -54,7 +54,7 @@ class _TodosScreenState extends State<TodosScreen> {
               List<TodoItem> todos = snapshot.data as List<TodoItem>;
               return ListView.builder(
                 itemCount: todos.length,
-                itemBuilder: (ctx, index) => TodoTile(todos[index]),
+                itemBuilder: (ctx, index) => TodoTile(todos[index], fetchTodos),
               );
             }
             return Center(
