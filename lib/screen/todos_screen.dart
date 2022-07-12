@@ -26,7 +26,6 @@ class _TodosScreenState extends State<TodosScreen> {
   Future<List<TodoItem>> fetchTodos() async {
     setState(() => isLoading = true);
     var todos = await todoDao.readAll();
-    todos.forEach((todo) => print(todo.toString()));
     return todos;
   }
 

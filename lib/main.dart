@@ -8,7 +8,11 @@ void main() {
 
 class MyApp extends StatelessWidget {
   static const _appTitle = 'SQLite CRUD';
-
+/*
+ 1 - arrumar todo_tile
+ 2 - update function
+ 3 - delete dialog e function
+*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

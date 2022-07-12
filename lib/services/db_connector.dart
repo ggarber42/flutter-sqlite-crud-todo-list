@@ -1,8 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../models/todo_item.dart';
-
 class DataBaseConnector {
   static final DataBaseConnector instance = DataBaseConnector._init();
 

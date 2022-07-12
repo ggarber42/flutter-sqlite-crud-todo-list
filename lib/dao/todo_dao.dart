@@ -35,7 +35,6 @@ class TodoDAO implements DAO<TodoItem> {
   @override
   Future<int> update(TodoItem todo) async{
     final db = await DataBaseConnector.instance.database;
-    print(todo);
     return await db.update(
       TodoItem.table,
       todo.toJson(),
