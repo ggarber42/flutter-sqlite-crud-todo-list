@@ -42,4 +42,14 @@ class TodoDAO implements DAO<TodoItem> {
       whereArgs: [todo.getId],
     );
   }
+
+  @override
+  Future<int> delete(int id) async{
+    final db = await DataBaseConnector.instance.database;
+    return await db.delete(
+      TodoItem.table,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
