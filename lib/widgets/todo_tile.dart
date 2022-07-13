@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_crud/dao/todo_dao.dart';
 import 'package:sqlite_crud/widgets/delete_dialog.dart';
+import 'package:sqlite_crud/widgets/edit_dialog.dart';
 
 import '../models/todo_item.dart';
 
@@ -15,8 +16,10 @@ class TodoTile extends StatefulWidget {
 }
 
 class _TodoTileState extends State<TodoTile> {
-  void _updateTodoItem() async {
-    await TodoDAO().update(widget.todo);
+  void updateTodoItem() {
+    setState(() {
+      TodoDAO().update(widget.todo);
+    });
   }
 
   int _toggleDoneValue(int value) {
@@ -28,8 +31,14 @@ class _TodoTileState extends State<TodoTile> {
         context: context,
         barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
-          return DeleteDialog(widget.todo.getId ,widget.fetchTodos);
+          return DeleteDialog(widget.todo.getId, widget.fetchTodos);
         });
+  }
+
+  Future<void> _openEditModal(BuildContext ctx){
+    return showDialog(context: context,barrierDismissible: true, builder: (BuildContext context){
+      return EditDialog(widget.todo, updateTodoItem);
+    });
   }
 
   @override
@@ -57,9 +66,7 @@ class _TodoTileState extends State<TodoTile> {
                   onTap: () {
                     final newValue = _toggleDoneValue(widget.todo.getDone);
                     widget.todo.setDone = newValue;
-                    setState(() {
-                      _updateTodoItem();
-                    });
+                    updateTodoItem();
                   }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -67,7 +74,7 @@ class _TodoTileState extends State<TodoTile> {
                   Row(
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => _openEditModal(context),
                         child: Icon(Icons.edit),
                       ),
                       TextButton(

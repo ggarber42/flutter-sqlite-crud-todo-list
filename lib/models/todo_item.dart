@@ -53,6 +53,10 @@ class TodoItem {
     done = value;
   }
 
+   set setName(String newName){
+    name = newName;
+  }
+
   Map<String, Object?> toJson() {
     return {
       'id': id,
@@ -64,5 +68,6 @@ class TodoItem {
   String toString() {
     return '_id $id Todo name: $name done: $done';
   }
+
 
 }
