@@ -15,3 +15,18 @@ O objetivo desse projeto é estudar flutter construindo um aplicativo que execut
 
 ## Screenshots
 
+<p align="left">
+    <img src="screenshots/msg594669171-9879.jpg" height="450"/>
+    <img src="screenshots/msg594669171-9877.jpg" height="450"/>
+    <img src="screenshots/msg594669171-9878.jpg" height="450"/>     
+</p>
+
+<br>
+<br>
+
+<p align="left">
+   <img src="screenshots/msg594669171-9880.jpg" height="450"/>
+  <img src="screenshots/msg594669171-9882.jpg" height="450"/>
+  <img src="screenshots/msg594669171-9881.jpg" height="450"/>
+</p>
+
