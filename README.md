@@ -9,7 +9,7 @@ The objective of this project is to study flutter building an app that performes
 
 ## Sobre o Projeto :brazil:
 
-Uma simples liste do que fazer feita em flutter e usando o SQLite como banco de dados.
+Uma simples lista do que fazer feita em flutter e usando o SQLite como banco de dados.
 
 O objetivo desse projeto é estudar flutter construindo um aplicativo que execute todas as ações de CRUD.
 
