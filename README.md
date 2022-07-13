@@ -1,16 +1,17 @@
-# sqlite_crud
+# Flutter SQLite Todo List
 
-A new Flutter project.
+## About The Project :uk:
 
-## Getting Started
+A very simple Todo List built with flutter and using SQLite for data persistence.
 
-This project is a starting point for a Flutter application.
+The objective of this project is to study flutter building an app that performes the CRUD action.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Sobre o Projeto :brazil:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Uma simples liste do que fazer feita em flutter e usando o SQLite como banco de dados.
+
+O objetivo desse projeto é estudar flutter construindo um aplicativo que execute todas as ações de CRUD.
+
+## Screenshots
+
